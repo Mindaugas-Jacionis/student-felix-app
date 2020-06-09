@@ -4,22 +4,19 @@ import Hero from "../components/Hero/Hero";
 import Movies from "../components/Movies/Movies";
 import Button from "../components/Button/Button";
 
-const Home = ({ favorite, setFavorite }) => {
+const Home = ({ setFavorite }) => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const fetchMovies = useCallback(async () => {
     setLoading(true);
-    const response = await fetch(
-      "https://academy-video-api.herokuapp.com/content/free-items",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch("https://academy-video-api.herokuapp.com/content/free-items", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     if (!response.ok) return setError("Error while fetching movies");
     setMovies(await response.json());
     setLoading(false);
@@ -32,13 +29,7 @@ const Home = ({ favorite, setFavorite }) => {
   return (
     <Fragment>
       <Hero />
-      <Movies
-        movies={movies}
-        loading={loading}
-        error={error}
-        favorite={favorite}
-        setFavorite={setFavorite}
-      >
+      <Movies movies={movies} loading={loading} error={error} setFavorite={setFavorite}>
         <div className="has-text-centered">
           <Button>Get More Content</Button>
         </div>

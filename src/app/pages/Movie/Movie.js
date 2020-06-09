@@ -4,7 +4,7 @@ import Button from "../../components/Button/Button";
 import FavoriteButton from "../../components/FavoriteButton/FavoriteButton";
 import "./Movie.scss";
 
-const Movie = ({ favorite, setFavorite }) => {
+const Movie = () => {
   const { movieId } = useParams();
 
   const [movie, setMovie] = useState({});
@@ -54,11 +54,7 @@ const Movie = ({ favorite, setFavorite }) => {
                   <h2 className="title has-text-white">{movie.title}</h2>
                   <p className="subtitle has-text-white">{movie.description}</p>
                   <Button onClick={toggleModal}>Watch</Button>
-                  <FavoriteButton
-                    favorite={favorite}
-                    setFavorite={setFavorite}
-                    movieId={movie.id}
-                  />
+                  <FavoriteButton movieId={movie.id} />
                 </div>
               </div>
             </article>

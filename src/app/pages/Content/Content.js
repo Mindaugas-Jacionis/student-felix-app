@@ -1,23 +1,20 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Movies from "../../components/Movies/Movies";
 
-const Content = ({ favorite, setFavorite }) => {
+const Content = () => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const fetchMovies = useCallback(async () => {
     setLoading(true);
-    const response = await fetch(
-      "https://academy-video-api.herokuapp.com/content/items",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: localStorage.authorization,
-        },
-      }
-    );
+    const response = await fetch("https://academy-video-api.herokuapp.com/content/items", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.authorization,
+      },
+    });
     if (!response.ok) {
       return setError("Error while fetching movies");
     }
@@ -28,15 +25,7 @@ const Content = ({ favorite, setFavorite }) => {
   useEffect(() => {
     fetchMovies();
   }, [fetchMovies]);
-  return (
-    <Movies
-      movies={movies}
-      loading={loading}
-      error={error}
-      favorite={favorite}
-      setFavorite={setFavorite}
-    />
-  );
+  return <Movies movies={movies} loading={loading} error={error} />;
 };
 
 // class Content extends Component {

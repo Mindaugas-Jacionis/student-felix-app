@@ -4,14 +4,7 @@ import { Link } from "react-router-dom";
 import "./Card.scss";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 
-const Card = ({
-  movieId,
-  title,
-  description,
-  image,
-  favorite,
-  setFavorite,
-}) => {
+const Card = ({ movieId, title, description, image }) => {
   return (
     <div className="column is-one-third">
       <div className="card has-background-black-ter equal-height movie-card">
@@ -30,13 +23,7 @@ const Card = ({
           <p className="has-text-white">{description}...</p>
         </div>
         <footer className="card-footer">
-          <FavoriteButton
-            favorite={favorite}
-            setFavorite={setFavorite}
-            movieId={movieId}
-          >
-            Favorite
-          </FavoriteButton>
+          <FavoriteButton movieId={movieId}>Favorite</FavoriteButton>
         </footer>
       </div>
     </div>
