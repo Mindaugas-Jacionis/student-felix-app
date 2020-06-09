@@ -1,0 +1,18 @@
+.login-tile {
+  justify-content: center;
+  .tile {
+    border-radius: 4px;
+    padding: 25px;
+    .password-field {
+      .icon-eye {
+        padding: 5px;
+        img {
+          pointer-events: all;
+        }
+        img:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

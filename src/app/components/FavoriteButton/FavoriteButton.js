@@ -1,20 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import "./FavoriteButton.scss";
 
-const FavoriteButton = ({ children }) => {
-  const [favorite, setFavorite] = useState(false);
+const FavoriteButton = ({ movieId, favorite, setFavorite }) => {
   const onClick = () => {
-    setFavorite((prevState) => !prevState);
+    setFavorite((prevState) => {
+      if (!prevState.includes(movieId)) {
+        return [...prevState, movieId];
+      } else {
+        return prevState.filter((id) => id !== movieId);
+      }
+    });
   };
-  const removeFavorite = "Remove 💔";
-  const makefavorite = "Favorite";
   return (
-    <a
+    <button
       className="button is-primary has-text-weight-bold favorite-button"
       onClick={onClick}
     >
-      {favorite ? removeFavorite : makefavorite}
-    </a>
+      {!!favorite && favorite.includes(movieId) ? "Remove 💔" : "Favorite"}
+    </button>
   );
 };
 

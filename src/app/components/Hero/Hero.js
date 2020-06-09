@@ -14,7 +14,7 @@ const Hero = () => {
       <div className="hero-body">
         <div className="container has-text-centered">
           <h1 className="title has-text-white is-size-1">Want more content?</h1>
-          <Button>Get Access</Button>
+          <Button linkTo="/register">Get Access</Button>
         </div>
       </div>
     </div>
