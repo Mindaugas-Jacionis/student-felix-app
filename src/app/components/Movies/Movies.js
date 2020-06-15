@@ -1,5 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
 
+import content from "../../../content";
 import Card from "../Card/Card";
 import "./Movies.scss";
 
@@ -33,4 +35,10 @@ const Movies = ({ movies, error, loading, children }) => {
   );
 };
 
-export default Movies;
+const enhance = connect((state) => ({
+  movies: content.selectors.getMoviesData(state),
+  loading: content.selectors.isFetchingMovies(state),
+  error: content.selectors.getMoviesError(state),
+}));
+
+export default enhance(Movies);
