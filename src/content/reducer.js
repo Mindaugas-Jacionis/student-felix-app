@@ -2,6 +2,11 @@ import * as types from "./types";
 
 const DEFAULT_CONTET_STATE = {
   favorites: [],
+  movies: {
+    loading: false,
+    error: null,
+    data: [],
+  },
 };
 
 const addFavorite = (state, action) => ({ ...state, favorites: [...state.favorites, action.id] });
@@ -20,6 +25,21 @@ function contentReducer(state = DEFAULT_CONTET_STATE, action) {
       return removeFavorite(state, action);
     case types.ADD_FAVORITE:
       return addFavorite(state, action);
+
+    case types.MOVIES_REQ:
+      return { ...state, movies: { ...state.movies, loading: true } };
+    case types.MOVIES_FAILURE:
+      return {
+        ...state,
+        movies: {
+          ...state.movies,
+          loading: false,
+          data: action.payload,
+          error: action.error,
+        },
+      };
+    case types.MOVIES_SUCESS:
+      return { ...state, movies: { ...state.movies, loading: false, data: action.payload } };
 
     default:
       return state;
