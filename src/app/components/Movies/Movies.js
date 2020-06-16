@@ -1,11 +1,13 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 
 import content from "../../../content";
 import Card from "../Card/Card";
 import "./Movies.scss";
 
-const Movies = ({ movies, error, loading, children }) => {
+const Movies = ({ movies, loading, children }) => {
+  const error = useSelector(content.selectors.getMoviesError);
+
   return (
     <div className="section">
       <div className="container movies-container">
@@ -37,7 +39,7 @@ const Movies = ({ movies, error, loading, children }) => {
 const enhance = connect((state) => ({
   movies: content.selectors.getMoviesData(state),
   loading: content.selectors.isFetchingMovies(state),
-  error: content.selectors.getMoviesError(state),
+  // error: content.selectors.getMoviesError(state),
 }));
 
 export default enhance(Movies);
