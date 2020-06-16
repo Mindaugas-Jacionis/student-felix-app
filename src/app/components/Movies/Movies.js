@@ -10,6 +10,9 @@ const Movies = ({ movies, error, loading, children }) => {
     <div className="section">
       <div className="container movies-container">
         <div className="columns is-multiline">
+          {loading && !error && (
+            <h3 className="has-text-white has-text-centered">Loading movies...</h3>
+          )}
           {error && <h3 className="has-text-danger has-text-centered">{error}</h3>}
           {!!movies &&
             movies.map((movie) => {
@@ -23,10 +26,6 @@ const Movies = ({ movies, error, loading, children }) => {
                 />
               );
             })}
-
-          {loading && !error && (
-            <h3 className="has-text-white has-text-centered">Loading movies...</h3>
-          )}
           {error && <h3 className="has-text-white has-text-centered">{error}</h3>}
         </div>
         {children}

@@ -8,10 +8,9 @@ export const toggleFavorite = (id, isFavorite) => {
   return { type: types.TOGGLE_FAVORITE, id };
 };
 
+// fetch action creator using redux-thunk middleware
 export const fetchMovies = ({ free } = {}) => {
-  return async (dispatch, stuff) => {
-    console.log(stuff);
-
+  return async (dispatch) => {
     dispatch({ type: types.MOVIES_REQ });
 
     const response = await fetch(
@@ -20,7 +19,7 @@ export const fetchMovies = ({ free } = {}) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          authorization: localStorage.authorization,
+          // authorization: localStorage.authToken,
         },
       }
     );
