@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
-import { bindActionCreators } from "redux";
-import { connect, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import content from "../../../content";
 import Movies from "../../components/Movies/Movies";
 
-const Content = ({ fetchMovies }) => {
+const Content = () => {
   const history = useHistory();
   const error = useSelector(content.selectors.getMoviesError);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchMovies();
-  }, [fetchMovies]);
+    dispatch(content.actions.fetchMovies());
+  }, [dispatch]);
 
   useEffect(() => {
     if (error) {
@@ -24,14 +24,4 @@ const Content = ({ fetchMovies }) => {
   return <Movies />;
 };
 
-const enhance = connect(
-  // (state) => ({
-  //   error: content.selectors.getMoviesError(state),
-  // }),
-  null,
-  (dispatch) => ({
-    fetchMovies: bindActionCreators(content.actions.fetchMovies, dispatch),
-  })
-);
-
-export default enhance(Content);
+export default Content;
