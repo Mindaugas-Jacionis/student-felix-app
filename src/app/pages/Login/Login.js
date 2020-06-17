@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import auth from "../../../auth";
 import "./Login.scss";
 import Button from "../../components/Button/Button";
 import eye from "../../images/eye.svg";
 
-const Login = ({ login, loading, error, isAuthenticated, token }) => {
+const Login = () => {
   let emailInput = React.createRef();
   let passwordInput = React.createRef();
   const [showPassword, setShowPassword] = useState(false);
   const history = useHistory();
+
+  const dispatch = useDispatch();
+  const error = useSelector(auth.selectors.getLoginErrorMessage);
+  const loading = useSelector(auth.selectors.isFetchingLogin);
+  const isAuthenticated = !!useSelector(auth.selectors.getAccessToken);
+  const token = useSelector(auth.selectors.getAccessToken);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -23,7 +28,7 @@ const Login = ({ login, loading, error, isAuthenticated, token }) => {
   }, [emailInput, history, isAuthenticated, token]);
 
   const signIn = () => {
-    login(emailInput.value, passwordInput.value);
+    dispatch(auth.actions.login(emailInput.value, passwordInput.value));
   };
 
   const revealPassword = () => {
@@ -91,20 +96,4 @@ const Login = ({ login, loading, error, isAuthenticated, token }) => {
   );
 };
 
-const enhance = connect(
-  (state) => {
-    return {
-      error: auth.selectors.getLoginErrorMessage(state),
-      loading: auth.selectors.isFetchingLogin(state),
-      isAuthenticated: !!auth.selectors.getAccessToken(state),
-      token: auth.selectors.getAccessToken(state),
-    };
-  },
-  (dispatch) => {
-    return {
-      login: bindActionCreators(auth.actions.login, dispatch),
-    };
-  }
-);
-
-export default enhance(Login);
+export default Login;
