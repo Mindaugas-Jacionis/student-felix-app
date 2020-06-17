@@ -6,6 +6,10 @@ const DEFAULT_AUTH_STATE = {
     loading: false,
     error: null,
   },
+  logout: {
+    loading: false,
+    error: null,
+  },
 };
 
 function reducer(state = DEFAULT_AUTH_STATE, action) {
@@ -23,6 +27,20 @@ function reducer(state = DEFAULT_AUTH_STATE, action) {
       };
     case types.LOGIN_SUCESS:
       return { ...state, token: action.payload.token, login: { ...state.login, loading: false } };
+
+    case types.LOGOUT_REQ:
+      return { ...state, logout: { ...state.logout, loading: true } };
+    case types.LOGOUT_FAILURE:
+      return {
+        ...state,
+        logout: {
+          ...state.logout,
+          loading: false,
+          error: action.payload,
+        },
+      };
+    case types.LOGOUT_SUCESS:
+      return { ...state, token: null, logout: { ...state.logout, loading: false } };
 
     default:
       return state;
