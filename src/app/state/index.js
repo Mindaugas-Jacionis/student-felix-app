@@ -1,7 +1,9 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+// import { connectRouter } from "connected-react-router";
 
 import middleware from "./middleware";
+// import history from "../history";
 import content from "../../content";
 import auth from "../../auth";
 
@@ -11,7 +13,11 @@ const allMiddleware =
     : applyMiddleware(...middleware);
 
 const store = createStore(
-  combineReducers({ content: content.reducer, auth: auth.reducer }),
+  combineReducers({
+    content: content.reducer,
+    auth: auth.reducer,
+    // router: connectRouter(history),
+  }),
   allMiddleware
 );
 

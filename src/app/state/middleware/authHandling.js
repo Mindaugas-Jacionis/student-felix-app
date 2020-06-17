@@ -1,3 +1,4 @@
+// import history from "../../history";
 import auth from "../../../auth";
 
 const log = ({ dispatch }) => (next) => (action) => {
@@ -5,14 +6,14 @@ const log = ({ dispatch }) => (next) => (action) => {
     localStorage.setItem("authToken", action.payload.token);
   }
 
-  if (action.error === 401) {
-    return dispatch(auth.actions.logout());
-  }
-
-  // fake example of logout - need to add to redux auth module action creators and types
-  // if (action.type === auth.types.LOGOUT_SUCESS) {
-  //   localStorage.removeItem("authToken");
+  // if (action.error === 401) {
+  //   return dispatch(auth.actions.logout());
   // }
+
+  if (action.type === auth.types.LOGOUT_SUCESS) {
+    // history.replace("/"); // need to look into why it is not working
+    localStorage.removeItem("authToken");
+  }
 
   return next(action);
 };
