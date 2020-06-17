@@ -35,3 +35,14 @@ export const login = (username, password) =>
 //     },
 //   };
 // };
+
+export const logout = (token) =>
+  createAction({
+    endpoint: "https://academy-video-api.herokuapp.com/auth/logout",
+    method: "POST",
+    body: JSON.stringify({ token }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    types: [types.LOGOUT_REQ, types.LOGOUT_SUCESS, types.LOGOUT_FAILURE],
+  });
