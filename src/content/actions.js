@@ -1,4 +1,6 @@
 import * as types from "./types";
+import store from "../app/state";
+import auth from "../auth";
 
 export const toggleFavorite = (id, isFavorite) => {
   if (typeof isFavorite === "boolean") {
@@ -19,7 +21,7 @@ export const fetchMovies = ({ free } = {}) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          // authorization: localStorage.authToken,
+          authorization: auth.selectors.getAccessToken(store.getState()),
         },
       }
     );
