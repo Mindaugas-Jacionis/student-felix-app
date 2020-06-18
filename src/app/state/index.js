@@ -11,7 +11,10 @@ const allMiddleware =
     : applyMiddleware(...middleware);
 
 const store = createStore(
-  combineReducers({ content: content.reducer, auth: auth.reducer }),
+  combineReducers({
+    content: content.reducer,
+    auth: auth.reducer,
+  }),
   allMiddleware
 );
 

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
 
 import "./App.scss";
 
@@ -15,12 +15,13 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Content from "./pages/Content/Content";
 import Movie from "./pages/Movie";
+import history from "./history";
 
 const App = () => {
   return (
     <Provider store={store}>
       <div className="App">
-        <Router>
+        <Router history={history}>
           <Navbar />
           <Switch>
             <Route exact path="/">
@@ -36,8 +37,8 @@ const App = () => {
             <Route exact path="*" component={NotFound} />
           </Switch>
         </Router>
-        <Footer />
       </div>
+      <Footer />
     </Provider>
   );
 };
