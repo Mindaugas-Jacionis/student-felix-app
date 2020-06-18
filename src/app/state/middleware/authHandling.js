@@ -1,4 +1,4 @@
-// import history from "../../history";
+import history from "../../history";
 import auth from "../../../auth";
 
 const log = ({ dispatch }) => (next) => (action) => {
@@ -11,7 +11,7 @@ const log = ({ dispatch }) => (next) => (action) => {
   // }
 
   if (action.type === auth.types.LOGOUT_SUCESS) {
-    // history.replace("/"); // need to look into why it is not working
+    history.replace("/"); // need to look into why it is not working
     localStorage.removeItem("authToken");
   }
 
