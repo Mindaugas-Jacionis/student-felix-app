@@ -1,3 +1,5 @@
+import { createAction } from "redux-api-middleware";
+
 import * as types from "./types";
 import store from "../app/state";
 import auth from "../auth";
@@ -36,3 +38,14 @@ export const fetchMovies = ({ free } = {}) => {
     }
   };
 };
+
+export const fetchMovieById = (id) =>
+  createAction({
+    endpoint: `https://academy-video-api.herokuapp.com/content/items/${id}`,
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: auth.selectors.getAccessToken(store.getState()),
+    },
+    types: [types.SINGLE_MOVIE_REQ, types.SINGLE_MOVIE_SUCESS, types.SINGLE_MOVIE_FAILURE],
+  });

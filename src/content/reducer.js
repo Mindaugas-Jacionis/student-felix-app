@@ -27,7 +27,7 @@ function contentReducer(state = DEFAULT_CONTET_STATE, action) {
       return addFavorite(state, action);
 
     case types.MOVIES_REQ:
-      return { ...state, movies: { ...state.movies, loading: true } };
+      return { ...state, movies: { ...state.movies, loading: true, error: null } };
     case types.MOVIES_FAILURE:
       return {
         ...state,
@@ -40,6 +40,29 @@ function contentReducer(state = DEFAULT_CONTET_STATE, action) {
       };
     case types.MOVIES_SUCESS:
       return { ...state, movies: { ...state.movies, loading: false, data: action.payload } };
+
+    case types.SINGLE_MOVIE_REQ:
+      return { ...state, movies: { ...state.movies, loading: true, error: null } };
+    case types.SINGLE_MOVIE_FAILURE:
+      return {
+        ...state,
+        movies: {
+          ...state.movies,
+          loading: false,
+          error: "Error while fetching movie",
+        },
+      };
+    case types.SINGLE_MOVIE_SUCESS:
+      return {
+        ...state,
+        movies: {
+          ...state.movies,
+          loading: false,
+          data: state.movies.data.some(({ id }) => id === action.payload.id)
+            ? state.movies.data
+            : [...state.movies.data, action.payload],
+        },
+      };
 
     default:
       return state;

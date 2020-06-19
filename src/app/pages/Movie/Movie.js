@@ -1,44 +1,34 @@
-import React, { useState, useEffect, useCallback, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import content from "../../../content";
 import Button from "../../components/Button/Button";
 import FavoriteButton from "../../components/FavoriteButton/FavoriteButton";
 import "./Movie.scss";
 
 const Movie = () => {
-  const { movieId } = useParams();
-
-  const [movie, setMovie] = useState({});
-  const [error, setError] = useState("");
   const [watch, setWatch] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const getMovie = useCallback(async () => {
-    setLoading(true);
-    const response = await fetch(
-      `https://academy-video-api.herokuapp.com/content/items/${movieId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    if (!response.ok) return setError("Error while fetching movie");
-    const movieObj = await response.json();
-
-    setMovie(movieObj);
-    setLoading(false);
-  }, [setMovie, movieId]);
+  const { movieId } = useParams();
+  const dispatch = useDispatch();
+  const movie = useSelector((state) => content.selectors.getMovieById(state, movieId));
+  const loading = useSelector(content.selectors.isFetchingMovies);
+  const error = useSelector(content.selectors.getMoviesError);
 
   useEffect(() => {
-    getMovie();
-  }, [getMovie]);
+    if (!movie) {
+      dispatch(content.actions.fetchMovieById(movieId));
+    }
+  }, [dispatch, movie, movieId]);
 
   const toggleModal = () => setWatch((prevState) => !prevState);
+
   return (
     <div className="section movie-section">
       <div className="container">
-        {!error && !loading && (
+        {loading && <h3 className="has-text-white has-text-centered">Loading movie...</h3>}
+        {error && <h3 className="has-text-white has-text-centered">{error}</h3>}
+        {!!movie && (
           <Fragment>
             <article className="media">
               <figure className="media-left">
@@ -73,11 +63,6 @@ const Movie = () => {
             </div>
           </Fragment>
         )}
-
-        {loading && !error && (
-          <h3 className="has-text-white has-text-centered">Loading movie...</h3>
-        )}
-        {error && <h3 className="has-text-white has-text-centered">{error}</h3>}
       </div>
     </div>
   );
