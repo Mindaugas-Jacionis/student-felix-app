@@ -6,12 +6,10 @@ const log = ({ dispatch }) => (next) => (action) => {
     localStorage.setItem("authToken", action.payload.token);
   }
 
-  // if (action.error === 401) {
-  //   return dispatch(auth.actions.logout());
-  // }
+  const isUnauthorized = action.payload && action.payload.status === 401;
 
-  if (action.type === auth.types.LOGOUT_SUCESS) {
-    history.replace("/"); // need to look into why it is not working
+  if (action.type === auth.types.LOGOUT_SUCESS || isUnauthorized) {
+    history.replace("/");
     localStorage.removeItem("authToken");
   }
 
